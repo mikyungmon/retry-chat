@@ -1,0 +1,8 @@
+#reset-btn.hide-reset-btn {
+  top: 100% !important;
+  left: 100% !important;
+}
+#reset-btn:not(.hide-reset-btn) {
+  width: 128px;
+  transform: translate(-50%, -50%);
+}

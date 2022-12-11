@@ -1,0 +1,36 @@
+{
+  "user": {
+    "profile": {
+      "nickName": "String",
+      "avatarImg": "String"
+    }
+  },
+
+  "rooms": {
+    "_id": "String",
+    "updatedAt": "Date",
+    "lastUserId": "String",
+    "lastUserName": "String",
+    "lastUserAvatar": "String",
+    "lastMessage": "String",
+    "joiner": "Array"
+  },
+
+  "read": {
+    "_id": "String",
+    "readAt": "Date",
+    "roomId": "String",
+    "userId": "String"
+  },
+
+  "messages": {
+    "_id": "String",
+    "createdAt": "Date",
+    "notice": "Boolean",
+    "message": "String",
+    "userId": "String",
+    "nickName": "String",
+    "avatarImg": "String",
+    "roomId": "String"
+  }
+}

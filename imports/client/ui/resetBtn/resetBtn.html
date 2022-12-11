@@ -1,0 +1,17 @@
+<template name="resetBtn">
+  {{#if requesting }}
+    <div class="bg-white position-fixed top-0 bottom-0 start-0 end-0 d-flex flex-column align-items-center justify-content-center">
+      <div class="spinner-border text-danger" role="status">
+        <span class="visually-hidden">초기화 중...</span>
+      </div>
+    </div>
+  {{else}}
+    <button
+        id="reset-btn"
+        class="btn btn-danger position-fixed top-50 start-50 rounded-0 {{ active }}"
+        tabindex="-1"
+    >
+      Reset DB
+    </button>
+  {{/if}}
+</template>

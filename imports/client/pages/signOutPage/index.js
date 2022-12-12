@@ -1,5 +1,6 @@
 import './signOutPage.html'
 import './signOutPage.css'
+import './signOutPage.js'
 import { Template } from 'meteor/templating'
 
 Template.signOutPage.onCreated(function() {

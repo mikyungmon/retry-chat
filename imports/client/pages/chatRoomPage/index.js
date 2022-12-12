@@ -1,5 +1,6 @@
 import './chatRoomPage.html'
 import './chatRoomPage.css'
+import './chatRoomPage.js'
 import { Template } from 'meteor/templating'
 
 Template.chatRoomPage.onCreated(function() {

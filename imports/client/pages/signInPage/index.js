@@ -1,5 +1,7 @@
 import './signInPage.html'
 import './signInPage.css'
+import './signInPage.js'
+
 import { Template } from 'meteor/templating'
 
 Template.signInPage.onCreated(function() {

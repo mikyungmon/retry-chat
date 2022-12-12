@@ -1,5 +1,6 @@
 import './roomListPage.html'
 import './roomListPage.css'
+import './roomListPage.js'
 import { Template } from 'meteor/templating'
 
 Template.roomListPage.onCreated(function() {

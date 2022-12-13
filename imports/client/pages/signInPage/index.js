@@ -28,12 +28,13 @@ Template.signInPage.events({
   },
 
   "click #button_sign": function(evt, tmpl) {
-    const id = tmpl.find('input[name=username]').value;
-    const pw = tmpl.find('input[name=password]').value;
+    logIn(evt,tmpl)
+  },
 
-    Meteor.loginWithPassword(id, pw, function(error) {
-      (!error) ? Meteor.logoutOtherClients() : alert(error.reason)
-    })
+  'keyup input': function (evt, tmpl) {
+    if (evt.which === 13) {
+      logIn(evt,tmpl)
+    }
   },
 
   "change #id_remember": function(evt,tmpl) {
@@ -47,7 +48,13 @@ Template.signInPage.events({
   }
 })
 
-function setCookie(){
+function logIn(evt, tmpl){
+  const id = tmpl.find('input[name=username]').value;
+  const pw = tmpl.find('input[name=password]').value;
+
+  Meteor.loginWithPassword(id, pw, function(error) {
+    (!error) ? Meteor.logoutOtherClients() : alert(error.reason)
+  })
 
 }
 

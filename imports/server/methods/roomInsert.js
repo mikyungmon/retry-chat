@@ -14,12 +14,6 @@ Meteor.methods({
     }
     const room_id = Rooms.insert(roomData)    // 데이터 넣고 ._id값 반환
 
-    Read.insert({
-      readAt : date,
-      userId : this.userId,
-      roomId : room_id
-    })
-
     return room_id
   }
 })

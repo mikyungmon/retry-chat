@@ -1,0 +1,41 @@
+.header-bg-color{
+  background: darkgrey;
+}
+
+.room-bg-color{
+  background: pink;
+}
+
+/*.logout-position{*/
+/*  float : right;*/
+/*}*/
+
+.img-rounded{
+  height : 60px;
+  width : 60px;
+  border-radius: 70%;
+}
+
+.text-box {
+  background: white;
+  position: relative;
+  display: inline-block;
+  max-width: calc(100% - 70px);
+  padding: 10px;
+  margin-top: 7px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.time-position{
+  top: 60px;
+  left: 370px;
+}
+/*.card-size{*/
+/*  height : 60px;*/
+/*  width : 300px;*/
+/*}*/
+
+/**{*/
+/*  outline: 2px solid blue;*/
+/*}*/

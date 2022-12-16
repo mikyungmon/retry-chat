@@ -1,6 +1,6 @@
 <template name="signInPage" xmlns="http://www.w3.org/1999/html">
   <section class="bg-color vh-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100 overflow-auto">
       <div class="col-xs-11 col-sm-11 col-lg-11 col-xl-11">
         <div class="card text-black rounded-4">
           <div class="card-body p-md-5">
@@ -16,7 +16,22 @@
                     <i class="bi bi-person-fill"></i>
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" name="username" id="form3Example1c" class="form-control" placeholder="Your ID"/>
+                      {{#if isChecked}}
+                      <input
+                          type="text"
+                          name="username"
+                          id="form3Example1c"
+                          class="form-control"
+                          value="{{rem_userid}}">
+
+                      {{else}}
+                      <input
+                          type="text"
+                          name="username"
+                          class="form-control"
+                          placeholder="Your ID">
+
+                      {{/if}}
                     </div>
                   </div>
 
@@ -33,11 +48,16 @@
                     <label class="form-check-label">
                       show password
                     </label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input class="form-check-input me-2" type="checkbox" value="" id="id_remember"/>
+
+                    {{#if isChecked}}
+                    <input class="ms-3 form-check-input me-2" type="checkbox" value="" id="id_remember" checked="checked"/>
+                    {{else}}
+                    <input class="ms-3 form-check-input me-2" type="checkbox" value="" id="id_remember2"/>
+                    {{/if}}
                     <label class="form-check-label">
                       remember ID
                     </label>
+
                   </div>
 
                   <div class="d-flex justify-content mx-4 mb-3 mb-lg-4">
@@ -55,6 +75,7 @@
                 <img src="https://p4.wallpaperbetter.com/wallpaper/254/637/251/toy-story-toy-story-3-bullseye-toy-story-jessie-toy-story-wallpaper-preview.jpg"
                      class="img-fluid"
                      alt="Sample image">
+
               </div>
 
             </div>

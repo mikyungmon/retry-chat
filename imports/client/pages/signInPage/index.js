@@ -1,7 +1,6 @@
 import './signInPage.html'
 import './signInPage.css'
 import { Template } from 'meteor/templating'
-import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 
 Template.signInPage.onCreated(function() {
 })
@@ -15,8 +14,15 @@ Template.signInPage.onDestroyed(function() {
 Template.signInPage.helpers({
   type_change(){
     return (Session.get('password_type') === 'password')?  'text' : 'password'
-  }
+  },
 
+  isChecked(){
+    return localStorage.getItem('userid') ? true : false
+  },
+
+  rem_userid() {
+    return localStorage.getItem('userid')
+  }
 })
 
 Template.signInPage.events({
@@ -35,25 +41,29 @@ Template.signInPage.events({
     if (evt.which === 13) {
       logIn(evt,tmpl)
     }
-  },
-
-  "change #id_remember": function(evt,tmpl) {
-    const checkbox = document.getElementById('id_remember')
-    const is_checked = checkbox.checked;
-
-    if(is_checked === true){
-      const id = tmpl.find('input[name=username]').value;
-      setCookie('userIdCookie', id)
-    }
   }
+
 })
 
 function logIn(evt, tmpl){
   const id = tmpl.find('input[name=username]').value;
   const pw = tmpl.find('input[name=password]').value;
+  const checkbox = document.getElementById('id_remember')
+  const is_checked = checkbox.checked;
 
   Meteor.loginWithPassword(id, pw, function(error) {
-    (!error) ? Meteor.logoutOtherClients() : alert(error.reason)
+    if (!error){
+      if (is_checked === true){
+        console.log('id저장')
+        localStorage.setItem('userid', id)
+      }
+      Meteor.logoutOtherClients()
+    }
+    else{
+      localStorage.removeItem('userid')
+      alert(error.reason)
+    }
+
   })
 
 }

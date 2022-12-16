@@ -1,3 +1,7 @@
 import './roomInsert'
 import './readUpdate'
 import './joinerUpdate'
+import './messageInsert'
+import './readInsert'
+import './lastUserUpdate'
+import './joinerRemove'

@@ -1,3 +1,73 @@
 <template name="chatRoomPage">
-  <div>chatRoomPage</div>
+  <div class="vh-100 vw-100 d-flex flex-column">
+    <div class="header-bg-color d-flex flex-c">
+      <!--    <a href="/roomList">-->
+      <button class="btn btn-grey btn-lg btn_back">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      <!--    </a>-->
+      <h2 class="p-3">chat room</h2>
+<!--      <button class="btn btn-grey btn-lg btn_out">-->
+<!--        <i class="bi bi-box-arrow-in-right"></i>-->
+<!--      </button>-->
+      <button class="btn btn-grey btn-lg btn_room_out">
+        <i class="bi bi-door-open-fill"></i>
+      </button>
+    </div>
+
+    <div class="room-bg-color flex-grow-1 position-relative">
+
+      <div class="position-absolute top-0 bottom-0 start-0 end-0 overflow-auto">
+        {{#each data in message_list}}
+        {{#with data}}
+        {{#if isMe data.userId}}
+
+        <div class="row m-0">
+
+          <div class="col-6 offset-6 d-flex flex-column align-items-end">
+<!--            <div class="d-flex flex-row-reverse">-->
+
+              <div class="text-box">
+                {{data.message}}
+              </div>
+              <p class="text-end">{{getDate data.createdAt}}</p>
+
+<!--            </div>-->
+          </div>
+
+        </div>
+
+        {{else}}
+        <div class="row m-0">
+
+          <div class="p-3 col d-flex flex-column flex-grow-0 align-items-end">
+            <img src="{{data.avatarImg}}"
+                 class="img-rounded">
+            <p class="text-left m-2">{{data.nickName}}</p>
+          </div>
+          <div class="p-2 col-7">
+            <div class="text-box">
+              {{data.message}}
+            </div>
+            <p class="ps-1">{{getDate data.createdAt}}</p>
+          </div>
+        </div>
+
+        {{/if}}
+        {{/with}}
+        {{/each}}
+      </div>
+
+    </div>
+
+    <div class="p-2 input-group header-bg-color">
+      <input type='text' name='messageText' class="form-control input-sm" placeholder="Type your message here"/>
+      <div class="input-group-btn">
+        <button class="btn btn-dark btn_send">
+          Send
+        </button>
+      </div>
+    </div>
+  </div>
+
 </template>

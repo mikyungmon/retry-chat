@@ -28,19 +28,24 @@ Template.roomListPage.helpers({
     return (joiner.includes(Meteor.userId()) ) ? true: false;
   },
 
-  isRead(room_id){  // 내일와서 수정
-    const room = Read.find({roomId: room_id}).fetch()
-    // console.log(123123, room)
-  }
+  // isRead(room_id){  // 내일와서 수정
+  //   const room = Read.find({roomId: room_id})
+  //   // console.log(room)
+  // }
 })
 
 
 Template.roomListPage.events({
-  "click .btn_create_room":function(){
-    Meteor.call('roomInsert', (err, room_id)=>{
-      err ? alert(err) : FlowRouter.go('/chatRoom/'+ room_id);
+  "click .btn_create_room":function() {
+    Meteor.call('roomInsert', (err, room_id) => {
+      err ? alert(err) : FlowRouter.go('/chatRoom/' + room_id);
     });
+
+    // const room_id2 = Rooms.findOne({}, {sort:{updatedAt: -1}})
+    // console.log(1111, room_id2)
+    // Meteor.call('readInsert', room_id2)
   },
+
 
   "click .btn_logout":function(){
     Meteor.logout()

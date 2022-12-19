@@ -2,7 +2,7 @@ import './chatRoomPage.html'
 import './chatRoomPage.css'
 import { Template } from 'meteor/templating'
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
-import { Messages,Rooms } from '/imports/collections'
+import { Messages, Read, Rooms } from '/imports/collections'
 
 
 
@@ -11,6 +11,12 @@ Template.chatRoomPage.onCreated(function() {
 })
 
 Template.chatRoomPage.onRendered(function() {
+  const room_id = FlowRouter.getParam("roomId")
+  this.autorun(function(){
+    Messages.find().count()
+    Meteor.call('readUpsert', room_id)
+  })
+
 })
 
 Template.chatRoomPage.onDestroyed(function() {
@@ -48,14 +54,14 @@ Template.chatRoomPage.events({
   "click .btn_send": function(evt, tmpl){
     messageSend(evt,tmpl)
     const room_id = window.location.pathname.split("/").pop()
-    const last_name = Messages.findOne({roomId: room_id},{sort: {createdAt:-1}}).nickName
-    console.log(room_id, last_name)
-    Meteor.call('lastUserUpdate', room_id, last_name) // 업데이트가 안돼..낼 확인하렴
+    Meteor.call('lastUpdate', room_id)
   },
 
   'keyup input': function (evt, tmpl) {
     if (evt.which === 13) {
       messageSend(evt, tmpl)
+      const room_id = window.location.pathname.split("/").pop()
+      Meteor.call('lastUpdate', room_id)
     }
   }
 })
@@ -68,6 +74,6 @@ function messageSend(evt,tmpl) {
   const avatar_img = Meteor.user().profile.avatarImg
 
   tmpl.find("input[name=messageText]").value = ""
-  // return message != '' ? Meteor.call('messageInsert', message, user_id, nickname, avatar_img, room_id) : false
-  return message!=''? Meteor.call('messageInsert', message, user_id, nickname, avatar_img, room_id) : false
+  return message != '' ? Meteor.call('messageInsert', message, user_id, nickname, avatar_img, room_id) : false
+  // return message!=''? Meteor.call('messageUpdate', room_id, message) : false
 }

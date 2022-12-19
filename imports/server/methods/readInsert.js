@@ -9,6 +9,7 @@ Meteor.methods({
       userId : Meteor.userId(),
       roomId : room_id
     }
+    console.log(2)
     Read.insert(readData)
 
   }

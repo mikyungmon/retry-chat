@@ -22,10 +22,12 @@
     </div>
 
     <div class="chat-bg-color2 flex-grow-1 position-relative">
+      {{#if Template.subscriptionsReady}}
       <div class="overflow-auto position-absolute card-position">
 
         {{#each data in room_list}}
         {{#with data}}
+
         <div class="row mx-0 border-bottom bg-light rounded-3 room_row">
           <div class="p-3 col d-flex">
             <img class="rounded float-start img-size"
@@ -42,13 +44,12 @@
               <p class="mb-2">{{getDate data.updatedAt}}</p>
 
               {{#if isJoiner data.joiner}}
-<!--                  <p>{{isRead data._id}}</p>-->
                   <span class="badge rounded-pill text-bg-warning">참여중</span>
-<!--                {{#if isRead}}-->
+                {{#if isRead data._id}}
                   <p class="mb-1"><span class="badge rounded-pill text-bg-primary">읽음</span></p>
-<!--                {{else}}-->
+                {{else}}
                   <p class="mb-1"><span class="badge rounded-pill text-bg-danger">읽지 않음</span></p>
-<!--                {{/if}}-->
+                {{/if}}
               {{else}}
                 <span class="badge rounded-pill text-bg-secondary">참여하지 않은 방</span>
               {{/if}}
@@ -59,6 +60,7 @@
         {{/with}}
         {{/each}}
       </div>
+      {{/if}}
     </div>
   </div>
 

@@ -28,24 +28,30 @@ Template.roomListPage.helpers({
     return (joiner.includes(Meteor.userId()) ) ? true: false;
   },
 
-  // isRead(room_id){  // 내일와서 수정
-  //   const room = Read.find({roomId: room_id})
-  //   // console.log(room)
-  // }
+  isRead(room_id){
+    const read = Read.findOne({userId: Meteor.userId(), roomId: room_id})?.readAt
+    if(!read) return false
+    const update_time = Rooms.findOne({_id:room_id}).updatedAt
+    // console.log(131313, read)
+
+    return read >= update_time ? true : false
+  }
 })
 
 
 Template.roomListPage.events({
-  "click .btn_create_room":function() {
+  "click .btn_create_room": function() {
     Meteor.call('roomInsert', (err, room_id) => {
-      err ? alert(err) : FlowRouter.go('/chatRoom/' + room_id);
+      if(err){
+        alert(err)
+      }
+      else{
+        createRoomMessageSend(room_id)   // 방 생성 시 메세지 insert
+        Meteor.call('readInsert', room_id)
+        FlowRouter.go('/chatRoom/' + room_id);
+      }
     });
-
-    // const room_id2 = Rooms.findOne({}, {sort:{updatedAt: -1}})
-    // console.log(1111, room_id2)
-    // Meteor.call('readInsert', room_id2)
   },
-
 
   "click .btn_logout":function(){
     Meteor.logout()
@@ -54,12 +60,18 @@ Template.roomListPage.events({
 
   // 방에 들어가는 상황
   "click .room_row": function(){
-    const click_time = new Date()
     const room_id = this._id  // 데이터 컨텍스트를 this가 포함(?)함
     Meteor.call('joinerUpdate',room_id)
-    Meteor.call('readUpdate', room_id , click_time)
     FlowRouter.go('/chatRoom/'+ room_id)
-
   }
 
 })
+
+function createRoomMessageSend(room_id){
+  const message = Meteor.user().profile.nickName + '님이 방을 생성했습니다.'
+  const user_id = Meteor.userId()
+  const nickname = Meteor.user().profile.nickName
+  const avatar_img = Meteor.user().profile.avatarImg
+
+  return Meteor.call('messageInsertIn',message, user_id, nickname, avatar_img, room_id)
+}

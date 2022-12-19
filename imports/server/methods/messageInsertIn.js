@@ -2,12 +2,12 @@ import { Meteor } from 'meteor/meteor'
 import { Messages } from '/imports/collections'
 
 Meteor.methods({
-  messageInsert(message, user_id, nickname, avatar_img, room_id) {
+  messageInsertIn(message, user_id, nickname, avatar_img, room_id) {
     const date = new Date()
     const messageData = {
       createdAt: date,
       message: message,
-      notice: "talk",
+      notice: true,
       userId: user_id,
       nickName: nickname,
       avatarImg: avatar_img,

@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import { Rooms,Read } from '/imports/collections'
+import { Rooms,Messages } from '/imports/collections'
 
 Meteor.methods({
   roomInsert() {

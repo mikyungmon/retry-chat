@@ -2,11 +2,12 @@ import './chatRoomPage.html'
 import './chatRoomPage.css'
 import { Template } from 'meteor/templating'
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
-import { Messages, Read, Rooms } from '/imports/collections'
+import { Messages, Rooms } from '/imports/collections'
 
 
 
 Template.chatRoomPage.onCreated(function() {
+  this.subscribe('roomsList')
   this.subscribe('messageList')
 })
 
@@ -45,9 +46,19 @@ Template.chatRoomPage.events({
   },
 
   //방에서 나가기
-  "click .btn_room_out": function(){
+  "click .btn_room_out": async function(){
     const room_id = window.location.pathname.split("/").pop()
-    Meteor.call('joinerRemove', room_id)
+    await Meteor.callAsync('joinerRemove', room_id)
+    OutRoomMessageSend(room_id)
+    Meteor.call('lastUpdate', room_id)
+    const joiner = Rooms.findOne({_id: room_id}).joiner
+    if(joiner.length){
+      false
+    }
+    else{
+      Meteor.call('roomRemove', room_id)
+    }
+
     FlowRouter.go('/roomList')
   },
 
@@ -76,4 +87,13 @@ function messageSend(evt,tmpl) {
   tmpl.find("input[name=messageText]").value = ""
   return message != '' ? Meteor.call('messageInsert', message, user_id, nickname, avatar_img, room_id) : false
   // return message!=''? Meteor.call('messageUpdate', room_id, message) : false
+}
+
+function OutRoomMessageSend(room_id){
+  const message = Meteor.user().profile.nickName + '님이 퇴장하셨습니다.'
+  const user_id = Meteor.userId()
+  const nickname = Meteor.user().profile.nickName
+  const avatar_img = Meteor.user().profile.avatarImg
+
+  return Meteor.call('messageInsertIn',message, user_id, nickname, avatar_img, room_id)
 }

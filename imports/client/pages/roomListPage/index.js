@@ -47,6 +47,7 @@ Template.roomListPage.events({
       }
       else{
         createRoomMessageSend(room_id)   // 방 생성 시 메세지 insert
+        Meteor.call('lastUpdate', room_id)
         Meteor.call('readInsert', room_id)
         FlowRouter.go('/chatRoom/' + room_id);
       }
@@ -62,6 +63,9 @@ Template.roomListPage.events({
   "click .room_row": function(){
     const room_id = this._id  // 데이터 컨텍스트를 this가 포함(?)함
     Meteor.call('joinerUpdate',room_id)
+    const joiner = Rooms.findOne({_id: room_id}).joiner
+    joiner.includes(Meteor.userId()) ? false : InRoomMessageSend(room_id)
+    Meteor.call('lastUpdate', room_id)
     FlowRouter.go('/chatRoom/'+ room_id)
   }
 
@@ -69,6 +73,15 @@ Template.roomListPage.events({
 
 function createRoomMessageSend(room_id){
   const message = Meteor.user().profile.nickName + '님이 방을 생성했습니다.'
+  const user_id = Meteor.userId()
+  const nickname = Meteor.user().profile.nickName
+  const avatar_img = Meteor.user().profile.avatarImg
+
+  return Meteor.call('messageInsertIn',message, user_id, nickname, avatar_img, room_id)
+}
+
+function InRoomMessageSend(room_id){
+  const message = Meteor.user().profile.nickName + '님이 방에 입장했습니다.'
   const user_id = Meteor.userId()
   const nickname = Meteor.user().profile.nickName
   const avatar_img = Meteor.user().profile.avatarImg
